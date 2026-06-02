@@ -30,8 +30,15 @@ namespace StudentApp
 
         private void btnAdd_Click(object sender, EventArgs e)
         {  
-            if(!int.TryParse(txtAge.Text, out int age)) return;
-            if (string.IsNullOrWhiteSpace(txtName.Text)) return;
+            if(!int.TryParse(txtAge.Text, out int age)) {
+                MessageBox.Show("Lütfen Yaþ Deðerini Doðru Giriniz");
+                return;
+                    }
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("Ýsim Alaný Boþ Býrakýlamaz");
+                return;
+            }
 
             students.Add(new Student
             {
@@ -39,9 +46,12 @@ namespace StudentApp
                 Age = age,
                 Id = students.Count + 1
             });
-            
-
+                
             RefreshGrid();
+
+            txtName.Clear();
+            txtAge.Clear();
+            txtName.Focus();
         }
     }
 }
