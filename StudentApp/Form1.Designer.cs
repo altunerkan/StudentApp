@@ -34,6 +34,7 @@
             dgvStudents = new DataGridView();
             txtName = new TextBox();
             txtAge = new TextBox();
+            btnDelete = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
@@ -59,21 +60,24 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(28, 132);
+            btnAdd.BackColor = Color.FromArgb(128, 255, 128);
+            btnAdd.Location = new Point(142, 121);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(105, 37);
             btnAdd.TabIndex = 2;
             btnAdd.Text = "Ekle";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
             // dgvStudents
             // 
+            dgvStudents.AllowUserToAddRows = false;
             dgvStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvStudents.Location = new Point(436, 34);
             dgvStudents.Name = "dgvStudents";
             dgvStudents.Size = new Size(427, 272);
             dgvStudents.TabIndex = 3;
+            dgvStudents.CellContentClick += dgvStudents_CellContentClick;
             // 
             // txtName
             // 
@@ -89,12 +93,24 @@
             txtAge.Size = new Size(167, 31);
             txtAge.TabIndex = 5;
             // 
+            // btnDelete
+            // 
+            btnDelete.BackColor = Color.Red;
+            btnDelete.Location = new Point(142, 164);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(105, 37);
+            btnDelete.TabIndex = 6;
+            btnDelete.Text = "Sil";
+            btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 255);
             ClientSize = new Size(875, 469);
+            Controls.Add(btnDelete);
             Controls.Add(txtAge);
             Controls.Add(txtName);
             Controls.Add(dgvStudents);
@@ -119,5 +135,6 @@
         private DataGridView dgvStudents;
         private TextBox txtName;
         private TextBox txtAge;
+        private Button btnDelete;
     }
 }
