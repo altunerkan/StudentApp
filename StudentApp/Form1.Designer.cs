@@ -35,6 +35,7 @@
             txtName = new TextBox();
             txtAge = new TextBox();
             btnDelete = new Button();
+            btnUpdate = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
@@ -63,7 +64,7 @@
             btnAdd.BackColor = Color.FromArgb(128, 255, 128);
             btnAdd.Location = new Point(142, 121);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(105, 37);
+            btnAdd.Size = new Size(115, 37);
             btnAdd.TabIndex = 2;
             btnAdd.Text = "Ekle";
             btnAdd.UseVisualStyleBackColor = false;
@@ -96,13 +97,24 @@
             // btnDelete
             // 
             btnDelete.BackColor = Color.Red;
-            btnDelete.Location = new Point(142, 164);
+            btnDelete.Location = new Point(142, 207);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(105, 37);
+            btnDelete.Size = new Size(115, 37);
             btnDelete.TabIndex = 6;
             btnDelete.Text = "Sil";
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.BackColor = Color.CornflowerBlue;
+            btnUpdate.Location = new Point(142, 164);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(115, 37);
+            btnUpdate.TabIndex = 7;
+            btnUpdate.Text = "Güncelle";
+            btnUpdate.UseVisualStyleBackColor = false;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // Form1
             // 
@@ -110,6 +122,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 255);
             ClientSize = new Size(875, 469);
+            Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
             Controls.Add(txtAge);
             Controls.Add(txtName);
@@ -136,5 +149,6 @@
         private TextBox txtName;
         private TextBox txtAge;
         private Button btnDelete;
+        private Button btnUpdate;
     }
 }

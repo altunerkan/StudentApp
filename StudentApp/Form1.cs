@@ -17,15 +17,15 @@ namespace StudentApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void RefreshGrid()
         {
             dgvStudents.DataSource = null;
             dgvStudents.DataSource = students;
-            
-                
+
+
         }
 
 
@@ -73,12 +73,41 @@ namespace StudentApp
                 return;
             }
 
-                RefreshGrid();
+            RefreshGrid();
         }
 
         private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
+            txtName.Text = selectedStudent.Name;
+            txtAge.Text = Convert.ToString(selectedStudent.Age);
+        }
 
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
+            if (!int.TryParse(txtAge.Text, out int age))
+            {
+                MessageBox.Show("Lütfen Yaþ Deðerini Doðru Giriniz");
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("Ýsim Alaný Boþ Býrakýlamaz");
+                return;
+            }
+
+            else
+            {
+                selectedStudent.Name = txtName.Text;
+                selectedStudent.Age = Convert.ToInt32(txtAge.Text);
+                txtName.Clear();
+                txtAge.Clear();
+                txtName.Focus();
+                RefreshGrid();
+            }
+
+                
         }
     }
 }
