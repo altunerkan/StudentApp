@@ -1,5 +1,4 @@
 using StudentApp.Models;
-using System.Runtime.InteropServices;
 
 namespace StudentApp
 {
@@ -7,8 +6,6 @@ namespace StudentApp
     {
 
         List<Student> students = new List<Student>();
-
-
 
         public Form1()
         {
@@ -24,7 +21,6 @@ namespace StudentApp
         {
             dgvStudents.DataSource = null;
             dgvStudents.DataSource = students;
-
 
         }
 
@@ -51,7 +47,6 @@ namespace StudentApp
             });
 
             RefreshGrid();
-
             txtName.Clear();
             txtAge.Clear();
             txtName.Focus();
@@ -62,9 +57,7 @@ namespace StudentApp
             if (dgvStudents.CurrentRow != null)
             {
                 Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
-
                 students.Remove(selectedStudent);
-
 
             }
             else
@@ -85,7 +78,7 @@ namespace StudentApp
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
+            
             if (!int.TryParse(txtAge.Text, out int age))
             {
                 MessageBox.Show("Lütfen Yaþ Deðerini Doðru Giriniz");
@@ -99,6 +92,7 @@ namespace StudentApp
 
             else
             {
+                Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
                 selectedStudent.Name = txtName.Text;
                 selectedStudent.Age = Convert.ToInt32(txtAge.Text);
                 txtName.Clear();
@@ -106,8 +100,29 @@ namespace StudentApp
                 txtName.Focus();
                 RefreshGrid();
             }
+        }
 
-                
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            dgvStudents.DataSource = students;
+            List<Student> src = new List<Student>();
+            foreach(Student student in students)
+            {
+                if (student.Name.Contains(txtSearch.Text))
+                {
+                    src.Add(student);
+                }               
+            }
+
+            if (src.Count > 0) 
+            {
+                dgvStudents.DataSource = src;
+            }
+            else
+            {
+                MessageBox.Show("Aradýðýn Deðerle Eþleþen Öðe Bulunamadý");
+                RefreshGrid();
+            }            
         }
     }
 }

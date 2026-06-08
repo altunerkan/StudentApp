@@ -36,6 +36,9 @@
             txtAge = new TextBox();
             btnDelete = new Button();
             btnUpdate = new Button();
+            txtSearch = new TextBox();
+            label1 = new Label();
+            btnSearch = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
@@ -116,12 +119,43 @@
             btnUpdate.UseVisualStyleBackColor = false;
             btnUpdate.Click += btnUpdate_Click;
             // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(696, 312);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(167, 31);
+            txtSearch.TabIndex = 8;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(647, 315);
+            label1.Margin = new Padding(6, 0, 6, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(40, 30);
+            label1.TabIndex = 9;
+            label1.Text = "🔎";
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.FromArgb(128, 255, 255);
+            btnSearch.Location = new Point(771, 349);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(92, 37);
+            btnSearch.TabIndex = 10;
+            btnSearch.Text = "Ara...";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 255);
             ClientSize = new Size(875, 469);
+            Controls.Add(btnSearch);
+            Controls.Add(label1);
+            Controls.Add(txtSearch);
             Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
             Controls.Add(txtAge);
@@ -150,5 +184,8 @@
         private TextBox txtAge;
         private Button btnDelete;
         private Button btnUpdate;
+        private TextBox txtSearch;
+        private Label label1;
+        private Button btnSearch;
     }
 }
