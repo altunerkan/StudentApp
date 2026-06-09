@@ -1,10 +1,14 @@
 using StudentApp.Models;
+using System.Data.SQLite;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StudentApp
 {
     public partial class Form1 : Form
     {
 
+        
+        SQLiteConnection connection = new SQLiteConnection("Data Source=C:/Users/erkna/OneDrive/Desktop/C#/StudentApp/StudentApp/Database/students.db;Version=3");
         List<Student> students = new List<Student>();
 
         public Form1()
@@ -24,6 +28,17 @@ namespace StudentApp
 
         }
 
+        private void AddStudentToDatabase(string name,int age)
+        {            
+            connection.Open();
+            string query = @"Insert Into Students (Name,Age) VALUES(@name, @age)";
+            SQLiteCommand command = new SQLiteCommand(query,connection);
+            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@age", age);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
 
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -39,12 +54,7 @@ namespace StudentApp
                 return;
             }
 
-            students.Add(new Student
-            {
-                Name = txtName.Text,
-                Age = age,
-                Id = students.Count + 1
-            });
+            AddStudentToDatabase(txtName.Text, age);
 
             RefreshGrid();
             txtName.Clear();
