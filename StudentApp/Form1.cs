@@ -18,7 +18,7 @@ namespace StudentApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            LoadStudentFromDatabase();
         }
 
         private void RefreshGrid()
@@ -37,7 +37,30 @@ namespace StudentApp
             command.Parameters.AddWithValue("@age", age);
             command.ExecuteNonQuery();
             connection.Close();
+            LoadStudentFromDatabase();
         }
+
+        private void LoadStudentFromDatabase()
+        {
+            students.Clear();
+            connection.Open();
+            string query = @"Select Id,Name,Age FROM Students";
+            SQLiteCommand command = new SQLiteCommand(query, connection);
+            SQLiteDataReader reader = command.ExecuteReader();           
+            while (reader.Read())
+            {
+                Student student = new Student();
+                int id = Convert.ToInt32(reader["ID"]);
+                string name = Convert.ToString(reader["Name"]);
+                int age = Convert.ToInt32(reader["Age"]);
+                student.Id = id;
+                student.Name = name;
+                student.Age = age;
+                students.Add(student);                
+            }
+            RefreshGrid();
+            connection.Close();
+        }   
 
 
 
