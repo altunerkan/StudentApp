@@ -62,6 +62,18 @@ namespace StudentApp
             connection.Close();
         }   
 
+        private void UpdateStudentInDatabase(int id,string name,int age)
+        {
+            connection.Open();
+            string query = @"Update Students Set Name=@name, Age=@age WHERE Id=@id";
+            SQLiteCommand command = new SQLiteCommand(query,connection);
+            command.Parameters.AddWithValue("@name",name);
+            command.Parameters.AddWithValue("@age", age);
+            command.Parameters.AddWithValue("@id", id);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
 
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -128,10 +140,11 @@ namespace StudentApp
                 Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
                 selectedStudent.Name = txtName.Text;
                 selectedStudent.Age = Convert.ToInt32(txtAge.Text);
+                UpdateStudentInDatabase(selectedStudent.Id,selectedStudent.Name,selectedStudent.Age);
                 txtName.Clear();
                 txtAge.Clear();
                 txtName.Focus();
-                RefreshGrid();
+                LoadStudentFromDatabase();
             }
         }
 
