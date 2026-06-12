@@ -74,6 +74,16 @@ namespace StudentApp
             connection.Close();
         }
 
+        private void DeleteStudentFromDatabase(int id)
+        {
+            connection.Open();
+            string query = @"Delete FROM Students WHERE Id = @id";
+            SQLiteCommand command = new SQLiteCommand(query,connection);
+            command.Parameters.AddWithValue("@id",id);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
 
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -102,7 +112,8 @@ namespace StudentApp
             if (dgvStudents.CurrentRow != null)
             {
                 Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
-                students.Remove(selectedStudent);
+                DeleteStudentFromDatabase(selectedStudent.Id);
+                LoadStudentFromDatabase();
 
             }
             else
