@@ -1,13 +1,10 @@
 using StudentApp.Models;
 using System.Data.SQLite;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StudentApp
 {
     public partial class Form1 : Form
-    {
-
-        
+    {       
         SQLiteConnection connection = new SQLiteConnection("Data Source=C:/Users/erkna/OneDrive/Desktop/C#/StudentApp/StudentApp/Database/students.db;Version=3");
         List<Student> students = new List<Student>();
 
@@ -25,7 +22,6 @@ namespace StudentApp
         {
             dgvStudents.DataSource = null;
             dgvStudents.DataSource = students;
-
         }
 
         private void AddStudentToDatabase(string name,int age)
@@ -84,8 +80,6 @@ namespace StudentApp
             connection.Close();
         }
 
-
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(txtAge.Text, out int age))
@@ -101,7 +95,6 @@ namespace StudentApp
 
             AddStudentToDatabase(txtName.Text, age);
 
-            RefreshGrid();
             txtName.Clear();
             txtAge.Clear();
             txtName.Focus();
@@ -114,15 +107,15 @@ namespace StudentApp
                 Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
                 DeleteStudentFromDatabase(selectedStudent.Id);
                 LoadStudentFromDatabase();
-
+                txtName.Clear();
+                txtAge.Clear();
+                txtName.Focus();
             }
             else
             {
                 MessageBox.Show("Herhangi Bir Öðe Seçili Deðil");
                 return;
             }
-
-            RefreshGrid();
         }
 
         private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -134,28 +127,37 @@ namespace StudentApp
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            
-            if (!int.TryParse(txtAge.Text, out int age))
+
+            if (dgvStudents.CurrentRow == null)
             {
-                MessageBox.Show("Lütfen Yaþ Deðerini Doðru Giriniz");
-                return;
-            }
-            else if (string.IsNullOrWhiteSpace(txtName.Text))
-            {
-                MessageBox.Show("Ýsim Alaný Boþ Býrakýlamaz");
+                MessageBox.Show("Lütfen Bir Öðrenci Seçiniz");
                 return;
             }
 
             else
             {
-                Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
-                selectedStudent.Name = txtName.Text;
-                selectedStudent.Age = Convert.ToInt32(txtAge.Text);
-                UpdateStudentInDatabase(selectedStudent.Id,selectedStudent.Name,selectedStudent.Age);
-                txtName.Clear();
-                txtAge.Clear();
-                txtName.Focus();
-                LoadStudentFromDatabase();
+                if (!int.TryParse(txtAge.Text, out int age))
+                {
+                    MessageBox.Show("Lütfen Yaþ Deðerini Doðru Giriniz");
+                    return;
+                }
+                else if (string.IsNullOrWhiteSpace(txtName.Text))
+                {
+                    MessageBox.Show("Ýsim Alaný Boþ Býrakýlamaz");
+                    return;
+                }
+
+                else
+                {
+                    Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
+                    selectedStudent.Name = txtName.Text;
+                    selectedStudent.Age = Convert.ToInt32(txtAge.Text);
+                    UpdateStudentInDatabase(selectedStudent.Id, selectedStudent.Name, selectedStudent.Age);
+                    txtName.Clear();
+                    txtAge.Clear();
+                    txtName.Focus();
+                    LoadStudentFromDatabase();
+                }
             }
         }
 
