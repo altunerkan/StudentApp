@@ -40,7 +40,7 @@ namespace StudentApp
         {
             students.Clear();
             connection.Open();
-            string query = @"Select Id,Name,Age FROM Students";
+            string query = @"Select Id,Name,Age,Grade FROM Students";
             SQLiteCommand command = new SQLiteCommand(query, connection);
             SQLiteDataReader reader = command.ExecuteReader();           
             while (reader.Read())
@@ -49,9 +49,12 @@ namespace StudentApp
                 int id = Convert.ToInt32(reader["ID"]);
                 string name = Convert.ToString(reader["Name"]);
                 int age = Convert.ToInt32(reader["Age"]);
+                double grade = 0;
+                if (reader["Grade"] != DBNull.Value){grade = Convert.ToDouble(reader["Grade"]);}  
                 student.Id = id;
                 student.Name = name;
                 student.Age = age;
+                student.Grade = grade;
                 students.Add(student);                
             }
             RefreshGrid();
