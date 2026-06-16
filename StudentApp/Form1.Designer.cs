@@ -39,6 +39,8 @@
             txtSearch = new TextBox();
             label1 = new Label();
             btnSearch = new Button();
+            label2 = new Label();
+            txtGrade = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
@@ -55,7 +57,7 @@
             // lblAge
             // 
             lblAge.AutoSize = true;
-            lblAge.Location = new Point(86, 84);
+            lblAge.Location = new Point(86, 74);
             lblAge.Margin = new Padding(6, 0, 6, 0);
             lblAge.Name = "lblAge";
             lblAge.Size = new Size(47, 30);
@@ -65,10 +67,10 @@
             // btnAdd
             // 
             btnAdd.BackColor = Color.FromArgb(128, 255, 128);
-            btnAdd.Location = new Point(142, 121);
+            btnAdd.Location = new Point(170, 145);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(115, 37);
-            btnAdd.TabIndex = 2;
+            btnAdd.TabIndex = 7;
             btnAdd.Text = "Ekle";
             btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
@@ -92,7 +94,7 @@
             // 
             // txtAge
             // 
-            txtAge.Location = new Point(142, 84);
+            txtAge.Location = new Point(142, 71);
             txtAge.Name = "txtAge";
             txtAge.Size = new Size(167, 31);
             txtAge.TabIndex = 5;
@@ -100,10 +102,10 @@
             // btnDelete
             // 
             btnDelete.BackColor = Color.Red;
-            btnDelete.Location = new Point(142, 207);
+            btnDelete.Location = new Point(170, 231);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(115, 37);
-            btnDelete.TabIndex = 6;
+            btnDelete.TabIndex = 9;
             btnDelete.Text = "Sil";
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
@@ -111,10 +113,10 @@
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.CornflowerBlue;
-            btnUpdate.Location = new Point(142, 164);
+            btnUpdate.Location = new Point(170, 188);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(115, 37);
-            btnUpdate.TabIndex = 7;
+            btnUpdate.TabIndex = 8;
             btnUpdate.Text = "Güncelle";
             btnUpdate.UseVisualStyleBackColor = false;
             btnUpdate.Click += btnUpdate_Click;
@@ -124,7 +126,7 @@
             txtSearch.Location = new Point(696, 312);
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(167, 31);
-            txtSearch.TabIndex = 8;
+            txtSearch.TabIndex = 10;
             // 
             // label1
             // 
@@ -142,10 +144,27 @@
             btnSearch.Location = new Point(771, 349);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(92, 37);
-            btnSearch.TabIndex = 10;
+            btnSearch.TabIndex = 11;
             btnSearch.Text = "Ara...";
             btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(86, 111);
+            label2.Margin = new Padding(6, 0, 6, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(48, 30);
+            label2.TabIndex = 11;
+            label2.Text = "Not";
+            // 
+            // txtGrade
+            // 
+            txtGrade.Location = new Point(142, 110);
+            txtGrade.Name = "txtGrade";
+            txtGrade.Size = new Size(167, 31);
+            txtGrade.TabIndex = 6;
             // 
             // Form1
             // 
@@ -153,6 +172,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 255);
             ClientSize = new Size(875, 469);
+            Controls.Add(txtGrade);
+            Controls.Add(label2);
             Controls.Add(btnSearch);
             Controls.Add(label1);
             Controls.Add(txtSearch);
@@ -187,5 +208,7 @@
         private TextBox txtSearch;
         private Label label1;
         private Button btnSearch;
+        private Label label2;
+        private TextBox txtGrade;
     }
 }

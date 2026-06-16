@@ -4,7 +4,7 @@ using System.Data.SQLite;
 namespace StudentApp
 {
     public partial class Form1 : Form
-    {       
+    {
         SQLiteConnection connection = new SQLiteConnection("Data Source=C:/Users/erkna/OneDrive/Desktop/C#/StudentApp/StudentApp/Database/students.db;Version=3");
         List<Student> students = new List<Student>();
 
@@ -24,13 +24,14 @@ namespace StudentApp
             dgvStudents.DataSource = students;
         }
 
-        private void AddStudentToDatabase(string name,int age)
-        {            
+        private void AddStudentToDatabase(string name, int age, double grade)
+        {
             connection.Open();
-            string query = @"Insert Into Students (Name,Age) VALUES(@name, @age)";
-            SQLiteCommand command = new SQLiteCommand(query,connection);
+            string query = @"Insert Into Students (Name,Age,Grade) VALUES(@name, @age, @grade)";
+            SQLiteCommand command = new SQLiteCommand(query, connection);
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@age", age);
+            command.Parameters.AddWithValue("@grade", grade);
             command.ExecuteNonQuery();
             connection.Close();
             LoadStudentFromDatabase();
@@ -42,7 +43,7 @@ namespace StudentApp
             connection.Open();
             string query = @"Select Id,Name,Age,Grade FROM Students";
             SQLiteCommand command = new SQLiteCommand(query, connection);
-            SQLiteDataReader reader = command.ExecuteReader();           
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 Student student = new Student();
@@ -50,24 +51,25 @@ namespace StudentApp
                 string name = Convert.ToString(reader["Name"]);
                 int age = Convert.ToInt32(reader["Age"]);
                 double grade = 0;
-                if (reader["Grade"] != DBNull.Value){grade = Convert.ToDouble(reader["Grade"]);}  
+                if (reader["Grade"] != DBNull.Value) { grade = Convert.ToDouble(reader["Grade"]); }
                 student.Id = id;
                 student.Name = name;
                 student.Age = age;
                 student.Grade = grade;
-                students.Add(student);                
+                students.Add(student);
             }
             RefreshGrid();
             connection.Close();
-        }   
+        }
 
-        private void UpdateStudentInDatabase(int id,string name,int age)
+        private void UpdateStudentInDatabase(int id, string name, int age, double grade)
         {
             connection.Open();
-            string query = @"Update Students Set Name=@name, Age=@age WHERE Id=@id";
-            SQLiteCommand command = new SQLiteCommand(query,connection);
-            command.Parameters.AddWithValue("@name",name);
+            string query = @"Update Students Set Name=@name, Age=@age, Grade=@grade WHERE Id=@id";
+            SQLiteCommand command = new SQLiteCommand(query, connection);
+            command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@age", age);
+            command.Parameters.AddWithValue("@grade", grade);
             command.Parameters.AddWithValue("@id", id);
             command.ExecuteNonQuery();
             connection.Close();
@@ -77,8 +79,8 @@ namespace StudentApp
         {
             connection.Open();
             string query = @"Delete FROM Students WHERE Id = @id";
-            SQLiteCommand command = new SQLiteCommand(query,connection);
-            command.Parameters.AddWithValue("@id",id);
+            SQLiteCommand command = new SQLiteCommand(query, connection);
+            command.Parameters.AddWithValue("@id", id);
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -95,11 +97,17 @@ namespace StudentApp
                 MessageBox.Show("Ýsim Alaný Boþ Býrakýlamaz");
                 return;
             }
+            if(!double.TryParse(txtGrade.Text, out double grade))
+            {
+                MessageBox.Show("Lütfen Not Deðerini Doðru Giriniz");
+                return;
+            }
 
-            AddStudentToDatabase(txtName.Text, age);
+            AddStudentToDatabase(txtName.Text, age, grade);
 
             txtName.Clear();
             txtAge.Clear();
+            txtGrade.Clear();
             txtName.Focus();
         }
 
@@ -112,6 +120,7 @@ namespace StudentApp
                 LoadStudentFromDatabase();
                 txtName.Clear();
                 txtAge.Clear();
+                txtGrade.Clear();
                 txtName.Focus();
             }
             else
@@ -126,6 +135,7 @@ namespace StudentApp
             Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
             txtName.Text = selectedStudent.Name;
             txtAge.Text = Convert.ToString(selectedStudent.Age);
+            txtGrade.Text= Convert.ToString(selectedStudent.Grade);
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -150,14 +160,22 @@ namespace StudentApp
                     return;
                 }
 
+                else if (!double.TryParse(txtGrade.Text, out double grade))
+                {
+                    MessageBox.Show("Lütfen Not Deðerini Doðru Giriniz");
+                    return;
+                }
+
                 else
                 {
                     Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
                     selectedStudent.Name = txtName.Text;
                     selectedStudent.Age = Convert.ToInt32(txtAge.Text);
-                    UpdateStudentInDatabase(selectedStudent.Id, selectedStudent.Name, selectedStudent.Age);
+                    selectedStudent.Grade = Convert.ToDouble(txtGrade.Text);
+                    UpdateStudentInDatabase(selectedStudent.Id, selectedStudent.Name, selectedStudent.Age, selectedStudent.Grade);
                     txtName.Clear();
                     txtAge.Clear();
+                    txtGrade.Clear();
                     txtName.Focus();
                     LoadStudentFromDatabase();
                 }
@@ -168,15 +186,15 @@ namespace StudentApp
         {
             dgvStudents.DataSource = students;
             List<Student> src = new List<Student>();
-            foreach(Student student in students)
+            foreach (Student student in students)
             {
                 if (student.Name.Contains(txtSearch.Text))
                 {
                     src.Add(student);
-                }               
+                }
             }
 
-            if (src.Count > 0) 
+            if (src.Count > 0)
             {
                 dgvStudents.DataSource = src;
             }
@@ -184,7 +202,7 @@ namespace StudentApp
             {
                 MessageBox.Show("Aradýðýn Deðerle Eþleþen Öðe Bulunamadý");
                 RefreshGrid();
-            }            
+            }
         }
     }
 }
