@@ -12,5 +12,7 @@ namespace StudentApp.Models
         public string Name { get; set; }
         public int Age { get; set; }
         public double Grade { get; set; }
+        public string Status { get; set; } 
+
     }
 }

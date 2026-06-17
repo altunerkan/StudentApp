@@ -1,5 +1,6 @@
 using StudentApp.Models;
 using System.Data.SQLite;
+using System.Diagnostics.Eventing.Reader;
 
 namespace StudentApp
 {
@@ -56,6 +57,8 @@ namespace StudentApp
                 student.Name = name;
                 student.Age = age;
                 student.Grade = grade;
+                if (grade >= 50){ student.Status = "Geçti"; }
+                else { student.Status = "Kaldı"; }  
                 students.Add(student);
             }
             RefreshGrid();
