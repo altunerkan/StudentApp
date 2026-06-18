@@ -57,12 +57,13 @@ namespace StudentApp
                 student.Name = name;
                 student.Age = age;
                 student.Grade = grade;
-                if (grade >= 50){ student.Status = "Geçti"; }
-                else { student.Status = "Kaldý"; }  
+                if (grade >= 50) { student.Status = "Geçti"; }
+                else { student.Status = "Kaldý"; }
                 students.Add(student);
             }
-            RefreshGrid();
             connection.Close();
+            RefreshGrid();
+            UpdateStatistics();
         }
 
         private void UpdateStudentInDatabase(int id, string name, int age, double grade)
@@ -88,6 +89,34 @@ namespace StudentApp
             connection.Close();
         }
 
+        private void UpdateStatistics()
+        {
+            double totalGrade = 0;
+            int passedCount = 0;
+            foreach (Student student in students)
+            {
+                if (student.Grade >= 50)
+                {
+                    passedCount += 1;
+                }
+                totalGrade += student.Grade;
+            }
+
+            if (students.Count > 0)
+            {
+                double average = totalGrade / students.Count;
+                lblPassedCount.Text = "Geçen: " + passedCount.ToString();
+                lblFailedCount.Text = "Kalan: " + (students.Count - passedCount);
+                lblAverageGrade.Text ="Ortalama: "+ average.ToString("0.00");
+            }
+            else
+            {
+                lblAverageGrade.Text = "Ortalama: 0";
+                lblFailedCount.Text = "Kalan: 0";
+                lblAverageGrade.Text = "Geçen: 0";
+            }
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(txtAge.Text, out int age))
@@ -100,7 +129,7 @@ namespace StudentApp
                 MessageBox.Show("Ýsim Alaný Boþ Býrakýlamaz");
                 return;
             }
-            if(!double.TryParse(txtGrade.Text, out double grade))
+            if (!double.TryParse(txtGrade.Text, out double grade))
             {
                 MessageBox.Show("Lütfen Not Deðerini Doðru Giriniz");
                 return;
@@ -138,7 +167,7 @@ namespace StudentApp
             Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
             txtName.Text = selectedStudent.Name;
             txtAge.Text = Convert.ToString(selectedStudent.Age);
-            txtGrade.Text= Convert.ToString(selectedStudent.Grade);
+            txtGrade.Text = Convert.ToString(selectedStudent.Grade);
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)

@@ -41,6 +41,9 @@
             btnSearch = new Button();
             label2 = new Label();
             txtGrade = new TextBox();
+            lblFailedCount = new Label();
+            lblAverageGrade = new Label();
+            lblPassedCount = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
@@ -166,12 +169,42 @@
             txtGrade.Size = new Size(167, 31);
             txtGrade.TabIndex = 6;
             // 
+            // lblFailedCount
+            // 
+            lblFailedCount.AutoSize = true;
+            lblFailedCount.Location = new Point(771, 1);
+            lblFailedCount.Name = "lblFailedCount";
+            lblFailedCount.Size = new Size(92, 30);
+            lblFailedCount.TabIndex = 14;
+            lblFailedCount.Text = "Kalan: 0";
+            // 
+            // lblAverageGrade
+            // 
+            lblAverageGrade.AutoSize = true;
+            lblAverageGrade.Location = new Point(436, 1);
+            lblAverageGrade.Name = "lblAverageGrade";
+            lblAverageGrade.Size = new Size(129, 30);
+            lblAverageGrade.TabIndex = 15;
+            lblAverageGrade.Text = "Ortalama: 0";
+            // 
+            // lblPassedCount
+            // 
+            lblPassedCount.AutoSize = true;
+            lblPassedCount.Location = new Point(615, 1);
+            lblPassedCount.Name = "lblPassedCount";
+            lblPassedCount.Size = new Size(99, 30);
+            lblPassedCount.TabIndex = 16;
+            lblPassedCount.Text = "Geçen: 0";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 255);
             ClientSize = new Size(875, 469);
+            Controls.Add(lblPassedCount);
+            Controls.Add(lblAverageGrade);
+            Controls.Add(lblFailedCount);
             Controls.Add(txtGrade);
             Controls.Add(label2);
             Controls.Add(btnSearch);
@@ -210,5 +243,10 @@
         private Button btnSearch;
         private Label label2;
         private TextBox txtGrade;
+        private Label label3;
+        private Label label4;
+        private Label lblFailedCount;
+        private Label lblAverageGrade;
+        private Label lblPassedCount;
     }
 }
