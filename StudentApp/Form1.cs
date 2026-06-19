@@ -107,7 +107,7 @@ namespace StudentApp
                 double average = totalGrade / students.Count;
                 lblPassedCount.Text = "Geçen: " + passedCount.ToString();
                 lblFailedCount.Text = "Kalan: " + (students.Count - passedCount);
-                lblAverageGrade.Text ="Ortalama: "+ average.ToString("0.00");
+                lblAverageGrade.Text = "Ortalama: " + average.ToString("0.00");
             }
             else
             {
@@ -235,6 +235,39 @@ namespace StudentApp
                 MessageBox.Show("Aradýðýn Deðerle Eþleþen Öðe Bulunamadý");
                 RefreshGrid();
             }
+        }
+
+        private void btnShowPassed_Click(object sender, EventArgs e)
+        {
+            List<Student> passedStudents = new List<Student>();
+            foreach (Student student in students)
+            {
+                if (student.Grade >= 50)
+                {
+                    passedStudents.Add(student);
+                }
+            }
+            dgvStudents.DataSource = null;
+            dgvStudents.DataSource = passedStudents;
+        }
+
+        private void btnShowFailed_Click(object sender, EventArgs e)
+        {
+            List<Student> failedStudents = new List<Student>();
+            foreach (Student student in students)
+            {
+                if (student.Grade < 50)
+                {
+                    failedStudents.Add(student);
+                }    
+            }
+            dgvStudents.DataSource = null;
+            dgvStudents.DataSource = failedStudents;
+        }
+
+        private void btnShowAll_Click(object sender, EventArgs e)
+        {
+            RefreshGrid();
         }
     }
 }

@@ -44,6 +44,9 @@
             lblFailedCount = new Label();
             lblAverageGrade = new Label();
             lblPassedCount = new Label();
+            btnShowAll = new Button();
+            btnShowPassed = new Button();
+            btnShowFailed = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
@@ -126,7 +129,7 @@
             // 
             // txtSearch
             // 
-            txtSearch.Location = new Point(696, 312);
+            txtSearch.Location = new Point(696, 383);
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(167, 31);
             txtSearch.TabIndex = 10;
@@ -134,7 +137,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(647, 315);
+            label1.Location = new Point(647, 383);
             label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
             label1.Size = new Size(40, 30);
@@ -144,7 +147,7 @@
             // btnSearch
             // 
             btnSearch.BackColor = Color.FromArgb(128, 255, 255);
-            btnSearch.Location = new Point(771, 349);
+            btnSearch.Location = new Point(771, 420);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(92, 37);
             btnSearch.TabIndex = 11;
@@ -196,12 +199,48 @@
             lblPassedCount.TabIndex = 16;
             lblPassedCount.Text = "Geçen: 0";
             // 
+            // btnShowAll
+            // 
+            btnShowAll.BackColor = Color.LightSeaGreen;
+            btnShowAll.Location = new Point(436, 312);
+            btnShowAll.Name = "btnShowAll";
+            btnShowAll.Size = new Size(115, 37);
+            btnShowAll.TabIndex = 17;
+            btnShowAll.Text = "Tümü";
+            btnShowAll.UseVisualStyleBackColor = false;
+            btnShowAll.Click += btnShowAll_Click;
+            // 
+            // btnShowPassed
+            // 
+            btnShowPassed.BackColor = Color.LightGreen;
+            btnShowPassed.Location = new Point(599, 312);
+            btnShowPassed.Name = "btnShowPassed";
+            btnShowPassed.Size = new Size(115, 37);
+            btnShowPassed.TabIndex = 18;
+            btnShowPassed.Text = "Geçenler";
+            btnShowPassed.UseVisualStyleBackColor = false;
+            btnShowPassed.Click += btnShowPassed_Click;
+            // 
+            // btnShowFailed
+            // 
+            btnShowFailed.BackColor = Color.Brown;
+            btnShowFailed.Location = new Point(748, 312);
+            btnShowFailed.Name = "btnShowFailed";
+            btnShowFailed.Size = new Size(115, 37);
+            btnShowFailed.TabIndex = 19;
+            btnShowFailed.Text = "Kalanlar";
+            btnShowFailed.UseVisualStyleBackColor = false;
+            btnShowFailed.Click += btnShowFailed_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 255);
             ClientSize = new Size(875, 469);
+            Controls.Add(btnShowFailed);
+            Controls.Add(btnShowPassed);
+            Controls.Add(btnShowAll);
             Controls.Add(lblPassedCount);
             Controls.Add(lblAverageGrade);
             Controls.Add(lblFailedCount);
@@ -248,5 +287,8 @@
         private Label lblFailedCount;
         private Label lblAverageGrade;
         private Label lblPassedCount;
+        private Button btnShowAll;
+        private Button btnShowPassed;
+        private Button btnShowFailed;
     }
 }
