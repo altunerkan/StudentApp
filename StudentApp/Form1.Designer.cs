@@ -90,6 +90,7 @@
             dgvStudents.Size = new Size(427, 272);
             dgvStudents.TabIndex = 3;
             dgvStudents.CellContentClick += dgvStudents_CellContentClick;
+            dgvStudents.SelectionChanged += dgvStudents_SelectionChanged;
             // 
             // txtName
             // 
@@ -133,6 +134,7 @@
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(167, 31);
             txtSearch.TabIndex = 10;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // label1
             // 

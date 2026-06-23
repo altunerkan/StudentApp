@@ -1,6 +1,5 @@
 using StudentApp.Models;
 using System.Data.SQLite;
-using System.Diagnostics.Eventing.Reader;
 
 namespace StudentApp
 {
@@ -17,12 +16,7 @@ namespace StudentApp
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadStudentFromDatabase();
-        }
-
-        private void RefreshGrid()
-        {
-            dgvStudents.DataSource = null;
-            dgvStudents.DataSource = students;
+            dgvStudents.ClearSelection();
         }
 
         private void AddStudentToDatabase(string name, int age, double grade)
@@ -89,6 +83,12 @@ namespace StudentApp
             connection.Close();
         }
 
+        private void RefreshGrid()
+        {
+            dgvStudents.DataSource = null;
+            dgvStudents.DataSource = students;
+        }
+
         private void UpdateStatistics()
         {
             double totalGrade = 0;
@@ -113,13 +113,21 @@ namespace StudentApp
             {
                 lblAverageGrade.Text = "Ortalama: 0";
                 lblFailedCount.Text = "Kalan: 0";
-                lblAverageGrade.Text = "Geçen: 0";
+                lblPassedCount.Text = "Geçen: 0";
             }
+        }
+
+        private void ClearInputs()
+        {
+            txtName.Clear();
+            txtAge.Clear();
+            txtGrade.Clear();
+            txtName.Focus();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(txtAge.Text, out int age))
+            if (!int.TryParse(txtAge.Text, out int age) || age <= 0 || age >= 100)
             {
                 MessageBox.Show("Lütfen Yaþ Deðerini Doðru Giriniz");
                 return;
@@ -129,31 +137,26 @@ namespace StudentApp
                 MessageBox.Show("Ýsim Alaný Boþ Býrakýlamaz");
                 return;
             }
-            if (!double.TryParse(txtGrade.Text, out double grade))
+            if (!double.TryParse(txtGrade.Text, out double grade) || grade < 0 || grade > 100)
             {
                 MessageBox.Show("Lütfen Not Deðerini Doðru Giriniz");
                 return;
             }
 
             AddStudentToDatabase(txtName.Text, age, grade);
-
-            txtName.Clear();
-            txtAge.Clear();
-            txtGrade.Clear();
-            txtName.Focus();
+            ClearInputs();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (dgvStudents.CurrentRow != null)
             {
+                DialogResult result = MessageBox.Show("Bu Öðrenciyi Silmek Ýstiyor Musunuz?", "Onay", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No) { return; }
                 Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
                 DeleteStudentFromDatabase(selectedStudent.Id);
                 LoadStudentFromDatabase();
-                txtName.Clear();
-                txtAge.Clear();
-                txtGrade.Clear();
-                txtName.Focus();
+                ClearInputs();
             }
             else
             {
@@ -164,6 +167,18 @@ namespace StudentApp
 
         private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
+            txtName.Text = selectedStudent.Name;
+            txtAge.Text = Convert.ToString(selectedStudent.Age);
+            txtGrade.Text = Convert.ToString(selectedStudent.Grade);
+        }
+
+        private void dgvStudents_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvStudents.CurrentRow == null)
+            {
+                return;
+            }
             Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
             txtName.Text = selectedStudent.Name;
             txtAge.Text = Convert.ToString(selectedStudent.Age);
@@ -181,7 +196,7 @@ namespace StudentApp
 
             else
             {
-                if (!int.TryParse(txtAge.Text, out int age))
+                if (!int.TryParse(txtAge.Text, out int age) || age <= 0 || age >= 100)
                 {
                     MessageBox.Show("Lütfen Yaþ Deðerini Doðru Giriniz");
                     return;
@@ -192,7 +207,7 @@ namespace StudentApp
                     return;
                 }
 
-                else if (!double.TryParse(txtGrade.Text, out double grade))
+                else if (!double.TryParse(txtGrade.Text, out double grade) || grade < 0 || grade > 100)
                 {
                     MessageBox.Show("Lütfen Not Deðerini Doðru Giriniz");
                     return;
@@ -202,13 +217,10 @@ namespace StudentApp
                 {
                     Student selectedStudent = (Student)dgvStudents.CurrentRow.DataBoundItem;
                     selectedStudent.Name = txtName.Text;
-                    selectedStudent.Age = Convert.ToInt32(txtAge.Text);
-                    selectedStudent.Grade = Convert.ToDouble(txtGrade.Text);
+                    selectedStudent.Age = age;
+                    selectedStudent.Grade = grade;
                     UpdateStudentInDatabase(selectedStudent.Id, selectedStudent.Name, selectedStudent.Age, selectedStudent.Grade);
-                    txtName.Clear();
-                    txtAge.Clear();
-                    txtGrade.Clear();
-                    txtName.Focus();
+                    ClearInputs();
                     LoadStudentFromDatabase();
                 }
             }
@@ -237,6 +249,16 @@ namespace StudentApp
             }
         }
 
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (txtSearch.Text == "")
+            {
+                RefreshGrid();
+            }
+        }
+
+
+
         private void btnShowPassed_Click(object sender, EventArgs e)
         {
             List<Student> passedStudents = new List<Student>();
@@ -259,7 +281,7 @@ namespace StudentApp
                 if (student.Grade < 50)
                 {
                     failedStudents.Add(student);
-                }    
+                }
             }
             dgvStudents.DataSource = null;
             dgvStudents.DataSource = failedStudents;
@@ -269,5 +291,7 @@ namespace StudentApp
         {
             RefreshGrid();
         }
+
+        
     }
 }
