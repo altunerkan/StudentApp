@@ -5,7 +5,7 @@ namespace StudentApp
 {
     public partial class Form1 : Form
     {
-        SQLiteConnection connection = new SQLiteConnection("Data Source=C:/Users/erkna/OneDrive/Desktop/C#/StudentApp/StudentApp/Database/students.db;Version=3");
+        SQLiteConnection connection = new SQLiteConnection(@"Data Source=Database\students.db;Version=3");
         List<Student> students = new List<Student>();
 
         public Form1()
